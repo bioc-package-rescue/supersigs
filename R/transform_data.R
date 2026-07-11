@@ -28,7 +28,7 @@ transform_data <- function(dt,
                            new_partition){
     # Add columns for every type of mutation
     dt <- dt %>% 
-        mutate_(.dots = muts_formula) %>%
+        mutate(!!!rlang::parse_exprs(muts_formula)) %>%
         mutate(tracking_ind = seq_len(nrow(dt)))
     
     # Store variables
@@ -40,7 +40,7 @@ transform_data <- function(dt,
         FUN.VALUE = character(1))
     
     dt_new <- dt %>% 
-        mutate_(.dots = new_partition_formula)
+        mutate(!!!rlang::parse_exprs(new_partition_formula))
     
     dt_new <- dt_new %>%
         arrange(.data$tracking_ind) %>%

@@ -8,7 +8,7 @@
 # Add up counts for every mutation (helper function)
 add_counts <- function(dt){
     dt <- dt %>%
-        transmute_(.dots = muts_formula) %>%
+        transmute(!!!rlang::parse_exprs(muts_formula)) %>%
         mutate(TOTAL_MUTATIONS = 
                          select(., c("C>A", "C>G", "C>T", 
                                      "T>A", "T>C", "T>G")) %>%
